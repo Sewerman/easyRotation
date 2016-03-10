@@ -4,7 +4,8 @@ function easyRotation.rotations.retadin.init()
   local _,playerClass = UnitClass("player") 
   if not easyRotationVars.AOE then easyRotationVars.AOE = "Single Target" end
   if not easyRotationVars.seal then easyRotationVars.seal = true end
-  if not easyRotationVars.wings then easyRotationVars.wings = "wings" end
+  if not easyRotationVars.wings then easyRotationVars.wings = false end
+  if not easyRotationVars.storm then easyRotationVars.storm = false end
   return playerClass == "PALADIN" and GetSpecialization() == 3 
 end
 
@@ -33,6 +34,22 @@ function easyRotation.rotations.retadin.Slash(cmd,val)
     easyRotationVars.wings = false
     DEFAULT_CHAT_FRAME:AddMessage("easyRotation not tracking Avenging Wrath",1,0,0)
     return true
+elseif (cmd == 'Seraphim' and easyRotationVars.Seraphim) then
+    easyRotationVars.Seraphim = false
+    DEFAULT_CHAT_FRAME:AddMessage("easyRotation not tracking Seraphim",1,0,0)
+    return true
+  elseif (cmd == 'Seraphim' and not easyRotationVars.Seraphim) then
+    easyRotationVars.Seraphim = true
+    DEFAULT_CHAT_FRAME:AddMessage("easyRotation tracking Seraphim",0,0,1)
+    return true
+elseif (cmd == 'storm' and not easyRotationVars.storm) then
+    easyRotationVars.storm = true
+    DEFAULT_CHAT_FRAME:AddMessage("easyRotation tracking Divine Storm",0,1,0)
+    return true
+  elseif (cmd == 'storm' and easyRotationVars.storm) then
+    easyRotationVars.storm = false
+    DEFAULT_CHAT_FRAME:AddMessage("easyRotation not tracking Divine Storm",1,0,0)
+    return true
   else
     return false
   end
@@ -45,8 +62,8 @@ function easyRotation.rotations.retadin.DecideSpells()
     easyRotation.rotations.retadin.DecideSingleTargetSpells()
   elseif easyRotationVars.AOE == "AOE" then
     easyRotation.rotations.retadin.DecideAOESpells()
-  elseif easyRotationVars.wings == "wings" then
-    easyRotation.rotations.retadin.AvengingWrath()
+  --elseif easyRotationVars.wings == "wings" then
+ --   easyRotation.rotations.retadin.AvengingWrath()
   end
 end
 
@@ -76,7 +93,10 @@ function easyRotation.rotations.retadin.DecideSingleTargetSpells()
       then easyRotation:UpdateRotationHinterIcon("Seal of Truth")
 
 elseif Seraphim
-     and easyRotation:UnitHealthPercent("Target")< 35 
+     and easyRotation:UnitHasBuff("player","Thorasus")
+     and not easyRotation:UnitHasBuff("player","Avenging Wrath") 
+     and easyRotation:PlayerCanCastSpell("Avenging Wrath")
+   or easyRotation:UnitHealthPercent("Target")< 35 
      and easyRotation:IsUsableSpell("Seraphim")
      and easyRotation:GetPlayerResource(SPELL_POWER_HOLY_POWER) > 4
      and easyRotation:PlayerCanCastSpell("Seraphim")           
@@ -96,8 +116,11 @@ elseif Seraphim
      and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 1   
        then easyRotation:UpdateRotationHinterIcon("Avenging Wrath")
 
-elseif FinalV or ImpSeals
+elseif  FinalV --or Impseals
+     and easyRotation:UnitHasBuff("player","Thorasus")
+     and not easyRotation:UnitHasBuff("player","Avenging Wrath") 
      and easyRotation:PlayerCanCastSpell("Avenging Wrath")
+    or easyRotation:PlayerCanCastSpell("Avenging Wrath")
      and easyRotation:PlayerTimeInCombat()>1
      and easyRotation:GetRange("target")< 6  
      and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 1 
@@ -108,6 +131,23 @@ elseif FinalV or ImpSeals
      and not easyRotation:UnitHasBuff("player","Avenging Wrath") 
      and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 0   
        then easyRotation:UpdateRotationHinterIcon("Avenging Wrath")
+
+elseif Impseals
+     and easyRotation:UnitHasBuff("Thorasus")
+     and not easyRotation:UnitHasBuff("player","Avenging Wrath") 
+     and easyRotation:PlayerCanCastSpell("Avenging Wrath")
+    or easyRotation:PlayerCanCastSpell("Avenging Wrath")
+     and easyRotation:PlayerTimeInCombat()>1
+     and easyRotation:GetRange("target")< 6  
+     and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 1 
+     and not easyRotation:UnitHasBuff("player","Avenging Wrath")  
+     and easyRotationVars.wings  
+    or easyRotation:UnitHealthPercent("Target")< 35 
+     and easyRotationVars.wings      
+     and not easyRotation:UnitHasBuff("player","Avenging Wrath") 
+     and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 0   
+       then easyRotation:UpdateRotationHinterIcon("Avenging Wrath")
+
 
  elseif easyRotation:PlayerCanCastSpell("Execution Sentence")
       and easyRotation:GetRange("target")< 40
@@ -140,23 +180,27 @@ elseif FinalV or ImpSeals
 
 --Final Verdict Buff (recieved after casting FV), Divine Purpose Buff (gives free FV or DS and damage as if 3 holy power), 
 --Divine Crusader Buff (gives free DS)
-  elseif easyRotation:PlayerCanCastSpell("Divine Storm")
+  elseif easyRotationVars.storm
+        and easyRotation:PlayerCanCastSpell("Divine Storm")
         and easyRotation:UnitHasBuff("player","Divine Crusader")
         and easyRotation:UnitHasBuff("player","Final Verdict")
         and easyRotation:GetRange("target")< 8
-       or easyRotation:GetRange("target")< 8
+       or easyRotationVars.storm
+        and easyRotation:GetRange("target")< 8
         and easyRotation:PlayerCanCastSpell("Divine Storm")
         and easyRotation:UnitHasBuff("player","Divine Crusader")
         and easyRotation:UnitHasBuffRemaining("player","Divine Crusader")<3
        then easyRotation:UpdateRotationHinterIcon("Divine Storm")
 
-  elseif (easyRotation:GetPlayerResource(SPELL_POWER_HOLY_POWER) == 5
+  elseif FinalV
+        and easyRotation:GetPlayerResource(SPELL_POWER_HOLY_POWER) == 5
         and easyRotation:GetRange("target")< 10
-        and easyRotation:PlayerCanCastSpell("Final Verdict"))
-     or (easyRotation:GetRange("target")< 10
         and easyRotation:PlayerCanCastSpell("Final Verdict")
-        and easyRotation:UnitHasBuff("player","Divine Purpose"))
-     or easyRotation:PlayerCanCastSpell("Final Verdict")
+     or Final and easyRotation:GetRange("target")< 10
+        and easyRotation:PlayerCanCastSpell("Final Verdict")
+        and easyRotation:UnitHasBuff("player","Divine Purpose")
+     or FinalV 
+        and easyRotation:PlayerCanCastSpell("Final Verdict")
         and easyRotation:GetPlayerResource(SPELL_POWER_HOLY_POWER)> 2
         and not easyRotation:PlayerCanCastSpell("Crusader Strike")
         and not easyRotation:PlayerCanCastSpell("Exorcism")
@@ -166,15 +210,15 @@ elseif FinalV or ImpSeals
         and easyRotation:GetRange("target")< 6        
        then easyRotation:UpdateRotationHinterIcon("Final Verdict")
 
-  elseif ImpSeals 
+  elseif Impseals 
         and (easyRotation:GetPlayerResource(SPELL_POWER_HOLY_POWER) == 5
         and easyRotation:GetRange("target")< 6
         and easyRotation:PlayerCanCastSpell("Templar's Verdict"))
-     or ImpSeals  
+     or Impseals  
         and (easyRotation:GetRange("target")< 6
         and easyRotation:PlayerCanCastSpell("Templar's Verdict")
         and easyRotation:UnitHasBuff("player","Divine Purpose"))
-     or ImpSeals 
+     or Impseals 
         and easyRotation:PlayerCanCastSpell("Templar's Verdict")
         and easyRotation:GetPlayerResource(SPELL_POWER_HOLY_POWER)> 2
         and not easyRotation:PlayerCanCastSpell("Crusader Strike")
@@ -236,7 +280,10 @@ if easyRotationVars.seal
       then easyRotation:UpdateRotationHinterIcon("Seal of Righteousness")
 
 elseif Seraphim
-     and easyRotation:UnitHealthPercent("Target")< 35 
+     and easyRotation:UnitHasBuff("Thorasus")
+     and not easyRotation:UnitHasBuff("player","Avenging Wrath") 
+     and easyRotation:PlayerCanCastSpell("Avenging Wrath")
+    or easyRotation:UnitHealthPercent("Target")< 35 
      and easyRotation:IsUsableSpell("Seraphim")
      and easyRotation:GetPlayerResource(SPELL_POWER_HOLY_POWER) > 4
      and easyRotation:PlayerCanCastSpell("Seraphim")           
@@ -256,8 +303,27 @@ elseif Seraphim
      and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 1   
        then easyRotation:UpdateRotationHinterIcon("Avenging Wrath")
 
-elseif FinalV or ImpSeals
+elseif FinalV --or Impseals
+     and easyRotation:UnitHasBuff("Thorasus")
+     and not easyRotation:UnitHasBuff("player","Avenging Wrath") 
      and easyRotation:PlayerCanCastSpell("Avenging Wrath")
+    or easyRotation:PlayerCanCastSpell("Avenging Wrath")
+     and easyRotation:PlayerTimeInCombat()>1
+     and easyRotation:GetRange("target")< 6  
+     and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 1 
+     and not easyRotation:UnitHasBuff("player","Avenging Wrath")  
+     and easyRotationVars.wings  
+    or easyRotation:UnitHealthPercent("Target")< 35 
+     and easyRotationVars.wings      
+     and not easyRotation:UnitHasBuff("player","Avenging Wrath") 
+     and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 0   
+       then easyRotation:UpdateRotationHinterIcon("Avenging Wrath")
+
+elseif Impseals
+     and easyRotation:UnitHasBuff("Thorasus")
+     and not easyRotation:UnitHasBuff("player","Avenging Wrath") 
+     and easyRotation:PlayerCanCastSpell("Avenging Wrath")
+    or easyRotation:PlayerCanCastSpell("Avenging Wrath")
      and easyRotation:PlayerTimeInCombat()>1
      and easyRotation:GetRange("target")< 6  
      and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 1 
@@ -279,7 +345,8 @@ elseif FinalV or ImpSeals
       and easyRotation:PlayerCanCastSpell("Execution Sentence")
         then easyRotation:UpdateRotationHinterIcon("Execution Sentence")
 --new
-  elseif easyRotation:GetRange("target")< 8
+  elseif easyRotationVars.storm
+        and easyRotation:GetRange("target")< 8
         and easyRotation:PlayerCanCastSpell("Divine Storm")
         and easyRotation:UnitHasBuff("player","Divine Crusader")
         --and easyRotation:GetPlayerResource(SPELL_POWER_HOLY_POWER) > 3
@@ -288,6 +355,7 @@ elseif FinalV or ImpSeals
          and easyRotation:GetPlayerResource(SPELL_POWER_HOLY_POWER) > 3       
          and easyRotation:PlayerCanCastSpell("Divine Storm")
          and easyRotation:GetRange("target")< 8
+         and easyRotationVars.storm
        then easyRotation:UpdateRotationHinterIcon("Divine Storm") 
 
   elseif easyRotation:GetRange("target") < 30
@@ -301,18 +369,21 @@ elseif FinalV or ImpSeals
 
 --Final Verdict Buff (recieved after casting FV), Divine Purpose Buff (gives free FV or DS and damage as if 3 holy power), 
 --Divine Crusader Buff (gives free DS)
-  elseif (easyRotation:GetPlayerResource(SPELL_POWER_HOLY_POWER) > 4
+  elseif Finalv 
+        and (easyRotation:GetPlayerResource(SPELL_POWER_HOLY_POWER) > 4
         and easyRotation:GetRange("target")< 10
         and easyRotation:PlayerCanCastSpell("Final Verdict")
         and not easyRotation:UnitHasBuff("player","Final Verdict"))
   --      then easyRotation:UpdateRotationHinterIcon("Final Verdict")
-       or (easyRotation:GetRange("target")< 10
+       or FinalV
+        and (easyRotation:GetRange("target")< 10
         and easyRotation:PlayerCanCastSpell("Final Verdict")
         and easyRotation:UnitHasBuff("player","Divine Purpose")        
         and easyRotation:UnitHasBuff("player","Divine Crusader")
         and not easyRotation:UnitHasBuff("player","Final Verdict"))          
        -- then easyRotation:UpdateRotationHinterIcon("Final Verdict") 
-       or not (easyRotation:PlayerCanCastSpell("Crusader Strike")
+       or FinalV 
+        and not (easyRotation:PlayerCanCastSpell("Crusader Strike")
         and easyRotation:PlayerCanCastSpell("Exorcism")
         and easyRotation:PlayerCanCastSpell("Execution Sentence")
         and easyRotation:PlayerCanCastSpell("Judgment"))
