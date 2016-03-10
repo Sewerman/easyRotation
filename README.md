@@ -1,0 +1,2 @@
+# easyRotation
+addon
