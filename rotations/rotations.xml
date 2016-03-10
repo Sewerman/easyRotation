@@ -1,0 +1,17 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+    <Script file="affliLock.lua"/>
+    <Script file="boomkin.lua"/>
+    <Script file="destroLock.lua"/>
+    <Script file="demoLock.lua"/>
+    <Script file="feralCat.lua"/>
+    <Script file="fireMage.lua"/>
+    <Script file="retadin.lua"/>
+    <Script file="protPally.lua"/>
+    <Script file="eleSham.lua"/>
+    <Script file="frostMage.lua"/>
+    <Script file="arcMage.lua"/>
+    <Script file="feralCat.lua"/>
+    <Script file="shadowPriest.lua"/>
+   
+    
+</Ui>

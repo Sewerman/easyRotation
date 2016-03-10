@@ -1,0 +1,289 @@
+OLD ARC MAGE  
+ if burnphase and easyRotation:PlayerTimeInCombat() > 5
+         and (easyRotation:UnitHasDebuffYourStacks("player","Arcane Blast") > 3 or (easyRotation:UnitManaPercent("player") < 85))
+         and easyRotation:IsItemReady("Mana Gem",easyRotation.fuzzTime)
+         and easyRotation:PlayerHasItem("Mana Gem")         
+         then easyRotation:UpdateButton("Mana Gem")
+   elseif not burnphase and easyRotation:PlayerHasItem("Mana Gem")
+         and easyRotation:IsItemReady("Mana Gem",easyRotation.fuzzTime)
+         and easyRotation:UnitManaPercent("player") < 60
+         and not ((easyRotation:WhenIsSpellReady("Evocation") - GetTime()) < 35)
+         then easyRotation:UpdateButton("Mana Gem")
+   elseif easyRotation:UnitManaPercent("player") < 36 
+         and easyRotation:PlayerCanCastSpell("Evocation")
+         then easyRotation:UpdateButton("Evocation")
+   elseif easyRotation:PlayerCanCastSpell("Mana Shield") 
+         and not easyRotation:UnitHasBuff("player","Mana Shield")
+         and easyRotation:PlayerTimeInCombat() > 5
+         then easyRotation:UpdateButton("Mana Shield")   
+   elseif  easyRotation:PlayerTimeInCombat() > 5  and 
+         easyRotation:PlayerCanCastSpell("Flame Orb") 
+         --and easyRotation:UnitManaPercent("player") > 20
+         then easyRotation:UpdateButton("Flame Orb")
+   elseif --burnphase and easyRotation:WhenIsSpellReady("Evocation") - GetTime() < 35 and 
+         easyRotation:PlayerCanCastSpell("Presence of Mind")
+         and not easyRotation:UnitHasBuff("player","Presence of Mind") 
+         and not easyRotation:UnitHasBuff("player","Arcane Power")  
+         then easyRotation:UpdateButton("Presence of Mind")
+   elseif (easyRotation:WhenIsSpellReady("Evocation") - GetTime()) < 45 
+         and easyRotation:PlayerCanCastSpell("Arcane Power") 
+         --and easyRotation:UnitHasDebuffYourStacks("player","Arcane Blast") >= 4
+         --and easyRotation:PlayerTimeInCombat() > 5
+         and not easyRotation:UnitHasBuff("player","Presence of Mind")
+         then easyRotation:UpdateButton("Arcane Power")
+   elseif not burnphase and easyRotation:UnitManaPercent("player") < 75
+         and easyRotation:UnitHasBuff("player","Arcane Missiles!") 
+         and easyRotation:PlayerCanCastSpell("Arcane Missiles") 
+        -- or (not burnphase and easyRotation:UnitHasDebuffYourStacks("player","Arcane Blast") >= 3)
+         then easyRotation:UpdateButton("Arcane Missiles")
+   elseif not burnphase and easyRotation:UnitHasBuff("player","Arcane Missiles!") 
+         ^
+         and easyRotation:PlayerCanCastSpell("Arcane Missiles")  
+         then easyRotation:UpdateButton("Arcane Missiles")
+   --elseif not burnphase and easyRotation:UnitHasDebuffYourStacks("player","Arcane Blast") >= 2
+   --      and not easyRotation:UnitHasBuff("player","Arcane Missiles!")
+   --     then easyRotation:UpdateButton("Arcane Barrage")
+   elseif burnphase and easyRotation:PlayerCanCastSpell("Arcane Blast")  
+         then easyRotation:UpdateButton("Arcane Blast",easyRotation.fuzzTime)
+   elseif not burnphase and easyRotation:PlayerCanCastSpell("Arcane Blast",easyRotation.fuzzTime) 
+         and easyRotation:UnitHasDebuffYourStacks("player","Arcane Blast") <= 3
+         then easyRotation:UpdateButton("Arcane Blast")
+   --elseif easyRotation:PlayerCanCastSpell("Arcane Blast")
+   --      then easyRotation:UpdateButton("Arcane Blast")
+   elseif easyRotation:PlayerCanCastSpell("Arcane Blast (waiting)")
+         then easyRotation:UpdateButton("Arcane Blast (waiting)")
+   elseif easyRotation:PlayerCanCastSpell("Arcane Barrage (waiting)")
+         then easyRotation:UpdateButton("Arcane Barrage (waiting)")
+   end
+ end
+
+
+1.  --  Copied lua
+2.  -- rFILTER 3 - CONFIG DOCUMENTATION
+3.  -- zork, 2011
+4.  -------------------------------------
+5. 
+6.  -------------------------------------
+7.  -- GENERAL
+8.  -------------------------------------
+9. 
+10.  highlightPlayerSpells = true  --player spells will have a blue border
+11.  updatetime            = 0.2   --how fast should the timer update itself
+12. 
+13.  -------------------------------------
+14.  -- BUFFS / DEBUFFS
+15.  -------------------------------------
+16. 
+17.  spec            = nil,          --nil, 1, 2 or 3 (optional), the talent tree you want to track the spell (nil will make it work in any tree)
+18.  visibility_state = "[combat] show; hide",         --STRING (optional) attribute that lets you show/hide the frame on a given state condition. example: "[stance:2] show; hide"
+19.  spellid         = 469,          --NUMBER, the spellid to track this will represent the icon if none is found
+20.  spelllist       = {             --TABLE (optional), you can check spell lists in case the same effect is given by more that one buff/debuff. your spell needs to be in the list aswell! list is sorted by index.
+21.                      [1] = 469,
+22.                      [2] = 79105,
+23.                      [3] = 6307,
+24.                      [4] = 90364,
+25.                    },
+26.  size            = 26,           --NUMBER, the size of the icon
+27.  pos             = {             --TABLE, the position of the icon (http://www.wowwiki.com/API_Region_SetPoint)
+28.                      a1 = "BOTTOM",
+29.                      a2 = "BOTTOM",
+30.                      af = "UIParent",
+31.                      x = 130,
+32.                      y = 107
+33.                    },
+34.  unit            = "player",     --STRING, UnitID (http://www.wowwiki.com/UnitId), the unit that should be tracked
+35.  validate_unit   = true,         --true/false (optional), only show the icon if unit is found
+36.  hide_ooc        = true,         --true/false (optional), hide icon out of combat
+37.  ismine          = false,        --true/false, track if the spell casted is actually MY spell (hide same buffs/debuffs from other players)
+38.  desaturate      = true,         --true/false, desaturate the icon if not found
+39.  match_spellid   = false,        --true/false (optional), in case you not only match the name but the spell id of the buff/debuff
+40.  move_ingame     = true,         --true/false (optional), in case you want to move the frame ingame, the size will be the MINIMUM frame size you can resize to, so adjust the size in case you need lower minimum size ingame
+41.  alpha           = {             --TABLE, Set the alpha values of your icons (transparency)
+42.                      found = {
+43.                        frame = 1,
+44.                        icon = 1,
+45.                      },
+46.                      not_found = {
+47.                        frame = 0.4,
+48.                        icon = 0.6,
+49.                      },
+50.                    },
+51. 
+52.  -------------------------------------
+53.  -- COOLDOWNS
+54.  -------------------------------------
+55. 
+56.  spec            = nil,          --nil, 1, 2 or 3 (optional), the talent tree you want to track the spell (nil will make it work in any tree)
+57.  visibility_state = "[combat] show; hide",         --STRING (optional) attribute that lets you show/hide the frame on a given state condition. example: "[stance:2] show; hide"
+58.  spellid         = 469,          --NUMBER, the spellid to track this will represent the icon if none is found
+59.  size            = 26,           --NUMBER, the size of the icon
+60.  pos             = {             --TABLE, the position of the icon (http://www.wowwiki.com/API_Region_SetPoint)
+61.                      a1 = "BOTTOM",
+62.                      a2 = "BOTTOM",
+63.                      af = "UIParent",
+64.                      x = 130,
+65.                      y = 107
+66.                    },
+67.  unit            = "player",     --STRING, UnitID (http://www.wowwiki.com/UnitId), the unit that should be tracked
+68.  hide_ooc        = true,         --true/false (optional), hide icon out of combat
+69.  desaturate      = true,         --true/false, desaturate the icon if not found
+70.  move_ingame     = true,         --true/false (optional), in case you want to move the frame ingame, the size will be the MINIMUM frame size you can resize to, so adjust the size in case you need lower minimum size ingame
+71.  alpha           = {             --TABLE, Set the alpha values of your icons (transparency)
+72.                      cooldown = {
+73.                        frame = 1,
+74.                        icon = 0.6,
+75.                      },
+76.                      no_cooldown = {
+77.                        frame = 1,
+78.                        icon = 1,
+79.                      },
+80.                    },
+
+
+Frost mage Frost bomb
+elseif easyRotation:PlayerCanCastSpell("Frost Bomb")
+       and easyRotation:GetRange("target")<=40
+       and (not easyRotation:IsMoving())
+       and easyRotation:UnitHasYourDebuffRemaining("target","Frost Bomb")< 4
+       and (easyRotation:UnitHasBuffStacks("player","Fingers of Frost") >= 2
+          or easyRotation:PlayerSpellCooldownRemaining("Frozen Orb") > 5
+          --or easyRotation:PlayerSpellCooldownRemaining("Water Jet") > 5)          
+       and easyRotation:GetRange("target") < 35) 
+         then easyRotation:UpdateRotationHinterIcon("Frost Bomb")
+
+old ret pally single target rotation
+ if easyRotation:PlayerCanCastSpell("Hammer of Wrath")
+      and (easyRotation:UnitHealthPercent("target") < 20 
+        or easyRotation:UnitHasBuff("player","Avenging Wrath")) then
+    easyRotation:UpdateRotationHinterIcon("Hammer of Wrath") 
+  elseif easyRotation:PlayerCanCastSpell("Avenging Wrath")
+      and not easyRotationVars.wings then
+      easyRotation:UpdateRotationHinterIcon("Avenging Wrath")     
+  elseif easyRotation:PlayerCanCastSpell("Templar's Verdict")
+      and easyRotation:GetPlayerResource(SPELL_POWER_HOLY_POWER) == 5 then 
+    easyRotation:UpdateRotationHinterIcon("Templar's Verdict")
+  elseif easyRotation:PlayerCanCastSpell("Execution Sentence")then
+      easyRotation:UpdateRotationHinterIcon("Execution Sentence")
+  elseif easyRotation:PlayerCanCastSpell("Crusader Strike")
+      and easyRotation:GetPlayerResource(SPELL_POWER_HOLY_POWER) < 3 then
+    easyRotation:UpdateRotationHinterIcon("Crusader Strike")
+  elseif easyRotation:PlayerCanCastSpell("Judgment")then
+    easyRotation:UpdateRotationHinterIcon("Judgment")
+  elseif easyRotation:PlayerCanCastSpell("Exorcism")then
+    easyRotation:UpdateRotationHinterIcon("Exorcism")  
+  elseif easyRotation:PlayerCanCastSpell("Crusader Strike") then
+    easyRotation:UpdateRotationHinterIcon("Crusader Strike")
+  end
+end
+ -- if easyRotationVars.seal then
+   -- if (easyRotation:UnitManaPercent("player") > 90) and
+     --   not easyRotation.rotations.retadin:SealOfTruth() and
+     --   easyRotationVars.mode == "Single Target" then
+     -- easyRotation:UpdateRotationHinterIcon("Seal of Truth") 
+   -- elseif easyRotation:UnitManaPercent("player") < 35 and
+     --   not easyRotation.rotations.retadin:SealOfInsight() and
+     --   easyRotationVars.mode == "Single Target" then
+     -- easyRotation:UpdateRotationHinterIcon("Seal of Insight")
+    --elseif easyRotationVars.mode == "AOE" and
+     --   not easyRotation.rotations.retadin:SealOfRighteousness() then
+     -- easyRotation:UpdateRotationHinterIcon("Seal of Righteousness")
+  --end
+--end
+
+ -- if easyRotationVars.seal then    
+ --   if easyRotationVars.wings == "wings" and
+ --       not easyRotation.rotations.retadin:AvengingWrath() then
+ --     easyRotation:UpdateRotationHinterIcon("Avenging Wrath")
+    --end
+  --end
+--function easyRotation.rotations.retadin:SealOfTruth()
+--  return GetShapeshiftForm() == 1
+--end
+
+--function easyRotation.rotations.retadin:SealOfRighteousness()
+--  return GetShapeshiftForm() == 2
+--end
+
+--function easyRotation.rotations.retadin:SealOfInsight()
+--  return GetShapeshiftForm() == 4
+--end
+   local burnphase = easyRotation:WhenIsPlayerSpellReady("Evocation") - GetTime() < 30
+                          and easyRotation:UnitManaPercent("player") > 45
+-- Evocation
+if burnphase 
+        and easyRotation:UnitManaPercent("player") < 50
+        and easyRotation:PlayerCanCastSpell("Evocation")
+        and not easyRotation:PlayerCanCastSpell("Arcane Missiles")
+         then easyRotation:UpdateRotationHinterIcon("Evocation")
+ -- Prismatic Crystal
+    elseif burnphase
+        and easyRotation:IsMouseOverTarget()
+        and easyRotation:PlayerCanCastSpell("Prismatic Crystal")
+        and easyRotation:GetRange("target")<=40       
+        and easyRotation:UnitHasDebuffStacks("player","Arcane Charge") > 3 
+        and not easyRotation:TargetIs("Prismatic Crystal")
+          then easyRotation:UpdateRotationHinterIcon("Prismatic Crystal") 
+   elseif burnphase
+        and easyRotation:TargetIs("Prismatic Crystal")
+        and easyRotation:UnitHasDebuffStacks("player","Arcane Charge") > 3 
+        and easyRotation:PlayerCanCastSpell("Supernova")
+          then easyRotation:UpdateRotationHinterIcon("Supernova")
+   elseif burnphase 
+        and easyRotation:TargetIs("Prismatic Crystal")
+        and easyRotation:UnitHasBuffStacks("player","Arcane Missiles!") > 2
+        and easyRotation:PlayerCanCastSpell("Arcane Missiles") 
+          then easyRotation:UpdateRotationHinterIcon("Arcane Missiles") 
+   elseif burnphase
+        and easyRotation:TargetIs("Prismatic Crystal")
+        and easyRotation:PlayerCanCastSpell("Arcane Blast")
+        and easyRotation:UnitHasBuffStacks("player","Arcane Missiles!") < 1
+        --or (easyRotation:TargetIs("Prismatic Crystal") 
+        and easyRotation:UnitHasDebuffStacks("player","Arcane Charge") > 3 
+         then easyRotation:UpdateRotationHinterIcon("Arcane Blast")  
+    -- Burn Phase  
+   --Evocation
+   elseif burnphase and easyRotation:UnitManaPercent("player") <45
+        and easyRotation:UnitHasBuffStacks("player","Arcane Missiles!") < 3 
+          then easyRotation:UpdateRotationHinterIcon("Evocation")
+   -- Arcane Missiles
+   elseif burnphase 
+         and easyRotation:UnitHasBuffStacks("player","Arcane Missiles!") > 2
+        and easyRotation:UnitHasDebuffStacks("player","Arcane Charge") ==4
+        --and easyRotation:UnitManaPercent("player") > 93
+        and easyRotation:PlayerCanCastSpell("Arcane Missiles") 
+          or (burnphase 
+           and easyRotation:UnitManaPercent("player") < 50
+           and easyRotation:UnitHasBuffStacks("player","Arcane Missiles!") >0
+           and easyRotation:PlayerCanCastSpell("Arcane Missiles"))
+          then easyRotation:UpdateRotationHinterIcon("Arcane Missiles")
+    -- Super Nova
+   elseif burnphase and 
+        easyRotation:PlayerCanCastSpell("Supernova")
+        and easyRotation:UnitHasDebuffStacks("player","Arcane Charge")==4
+        and easyRotation:UnitHasBuffStacks("player","Arcane Missiles!") < 3
+        and easyRotation:GetPlayerSpellCharges("Supernova") > 1
+        --and easyRotation:PlayerSpellCooldownRemaining("Prismatic Crystal") >=6
+        --and easyRotation:GetPlayerSpellCharges("Supernova") >2
+        --and easyRotation:PlayerSpellCooldownRemaining("Prismatic Crystal") >=60
+          then easyRotation:UpdateRotationHinterIcon("Supernova")
+  -- Arcane Blast
+   elseif burnphase and 
+        easyRotation:PlayerCanCastSpell("Arcane Blast")
+        and easyRotation:UnitManaPercent("player") > 45
+        and easyRotation:UnitHasDebuffStacks("player","Arcane Charge") < 4
+        or (easyRotation:UnitHasBuffStacks("player","Arcane Missiles!") < 3 and not easyRotation:UnitHasDebuffStacks("player","Arcane Charge")==4) 
+        or (easyRotation:UnitHasBuff("player","Presence of Mind")) 
+          then easyRotation:UpdateRotationHinterIcon("Arcane Blast")    
+  -- Arcane Barrage
+   elseif burnphase
+         and (easyRotation:SpellNotCastRecently("Arcane Missiles") 
+         or easyRotation:SpellNotCastRecently("Supernova"))
+        and easyRotation:UnitHasDebuffStacks("player","Arcane Charge")==4
+        and easyRotation:UnitHasBuffStacks("player","Arcane Missiles!") < 3
+        and easyRotation:GetPlayerSpellCharges("Supernova")<2
+           then easyRotation:UpdateRotationHinterIcon("Arcane Barrage")
+   
+ 
+ 
+   end
+ end

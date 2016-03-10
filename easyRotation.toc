@@ -1,0 +1,16 @@
+## Interface: 60000
+## Title: easyRotation
+## Author: Zannien, Sewerman
+## Version: 2.0
+## SavedVariablesPerCharacter: easyRotationVars
+## Notes: Visual indicator for multiple class/spec spell rotation
+
+embeds.xml
+
+easyRotation.lua
+easyRotationUI.lua
+easyRotationCore.lua
+easyRotationUtils.lua
+easyRotationSpells.lua
+
+rotations\rotations.xml
