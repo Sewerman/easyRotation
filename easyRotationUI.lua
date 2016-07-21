@@ -37,7 +37,7 @@ function easyRotation:CreateRotationHinterUI()
   easyRotation.rotationHinter:SetHeight(58)
   easyRotation.rotationHinter.texture = easyRotation.rotationHinter:CreateTexture()
   easyRotation.rotationHinter.texture:SetAllPoints(easyRotation.rotationHinter)
-  easyRotation.rotationHinter.texture:SetTexture(0.5, 0.5, 0.5, 1)
+  easyRotation.rotationHinter.texture:SetColorTexture(0.5, 0.5, 0.5, 1)
   easyRotation.rotationHinter:SetMovable(true)
   easyRotation.rotationHinter:SetClampedToScreen(true)
   easyRotation:EnableRotationHinterDragging()
@@ -84,7 +84,7 @@ function easyRotation:UpdateRotationHinterIcon(spellname)
   local spellIcon = easyRotation:getSpellIcon(spellname)
   local spellColor = easyRotation:getSpellColor(spellname)
   easyRotation.rotationHinterIcon.texture:SetTexture(spellIcon)
-  easyRotation.rotationHinter.texture:SetTexture(spellColor.r/255, spellColor.g/255, spellColor.b/255, 1)
+  easyRotation.rotationHinter.texture:SetColorTexture(spellColor.r/255, spellColor.g/255, spellColor.b/255, 1)
   easyRotation.buttonUpdated = true
 end
 
@@ -93,5 +93,5 @@ function easyRotation:RotationHinterUIInitilized()
 end
 
 function easyRotation:deactivate()
-  easyRotation.rotationHinter.texture:SetTexture(127/255, 127/255, 127/255, 1)
+  easyRotation.rotationHinter.texture:SetColorTexture(127/255, 127/255, 127/255, 1)
 end
