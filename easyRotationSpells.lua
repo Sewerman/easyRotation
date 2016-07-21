@@ -131,6 +131,10 @@ easyRotation.spells["feralCat"]["Tiger's Fury"] =     {["color"] = "#FEE18B"}
 easyRotation.spells["feralCat"]["Mark of the Wild"] = {["color"] = "#F73BBC"}
 easyRotation.spells["feralCat"]["Rejuvenation"] =     {["color"] = "#FF62FF"}
 easyRotation.spells["feralCat"]["Healing Touch"] =    {["color"] = "#127C0E"}
+easyRotation.spells["feralCat"]["Berserk"] =          {["color"] = "#7A2005"}
+easyRotation.spells["feralCat"]["Wild Charge"] =      {["color"] = "#FF4000"}
+easyRotation.spells["feralCat"]["Prowl"] =            {["color"] = "#ABB6FF"}
+easyRotation.spells["feralCat"]["Incarnation: King of the Jungle"] = {["color"] = "#8C90FF"}
 -- Guardian
 -- Restoration
 easyRotation.spells["restoDruid"]["Rejuvenation"] =      {["color"] = "#5B53FA"}
@@ -238,50 +242,20 @@ easyRotation.spells["protPally"]["Execution Sentence"] =       {["color"] = "#D9
 easyRotation.spells["protPally"]["Light's Hammer"] =           {["color"] = "#FFFF75"} 
 easyRotation.spells["protPally"]["Holy Prism"] =               {["color"] = "#CFA600"}   
 easyRotation.spells["protPally"]["Seal of Truth"] =            {["color"] = "#FEFD02"}
-easyRotation.spells["protPally"]["Seal of Insight"] =          {["color"] = "#FBFA66"}
+easyRotation.spells["protPally"]["Seal of Insight"] =          {["color"] = "#FBFA65"}
 easyRotation.spells["protPally"]["Seal of Righteousness"] =    {["color"] = "#1919FF"}
 
 -- Retribution
 easyRotation.spells["retadin"]["Judgment"] =                  {["color"] = "#E6B23D"}
-easyRotation.spells["retadin"]["Exorcism"] =                  {["color"] = "#FF8000"}
+easyRotation.spells["retadin"]["Flash of Light"] =            {["color"] = "#FF9D00"}
 easyRotation.spells["retadin"]["Crusader Strike"] =           {["color"] = "#F3EB5D"}
-easyRotation.spells["retadin"]["Hammer of the Righteous"] =   {["color"] = "#DEF8AD"}
+easyRotation.spells["retadin"]["Justicar's Vengence"] =       {["color"] = "#FA6407"}
 easyRotation.spells["retadin"]["Templar's Verdict"] =         {["color"] = "#802FA5"}
-easyRotation.spells["retadin"]["Final Verdict"] =             {["color"] = "#7F13A6"}
-easyRotation.spells["retadin"]["Word of Glory"] =             {["color"] = "#FFD350"}
 easyRotation.spells["retadin"]["Divine Storm"] =              {["color"] = "#DFF8AA"}
-easyRotation.spells["retadin"]["Hammer of Wrath"] =           {["color"] = "#FCE193"}
+easyRotation.spells["retadin"]["Blade of Wrath"] =            {["color"] = "#99DCFE"}
 easyRotation.spells["retadin"]["Avenging Wrath"] =            {["color"] = "#FFFF92"}
-easyRotation.spells["retadin"]["Inquisition"] =               {["color"] = "#8031A8"}
-easyRotation.spells["retadin"]["Holy Avenger"] =              {["color"] = "#3E44AA"}
 easyRotation.spells["retadin"]["Execution Sentence"] =        {["color"] = "#D9604F"}
-easyRotation.spells["retadin"]["Light's Hammer"] =            {["color"] = "#FFD633"}
-easyRotation.spells["retadin"]["Seal of Truth"] =             {["color"] = "#FEFD02"}
-easyRotation.spells["retadin"]["Seal of Righteousness"] =     {["color"] = "#1919FF"}
-easyRotation.spells["retadin"]["Seal of Insight"] =           {["color"] = "#FBFA66"}
-easyRotation.spells["retadin"]["Seal of Justice"] =           {["color"] = "#E6B22D"}
-easyRotation.spells["retadin"]["Seraphim"] =                  {["color"] = "#2F36FF"}
 
--- Ret Seraphim Palidan 
---easyRotation.spells["RetSerPal"]["Judgment"] =                  {["color"] = "#E6B23D"}
---easyRotation.spells["RetSerPal"]["Exorcism"] =                  {["color"] = "#FF8000"}
---easyRotation.spells["RetSerPal"]["Crusader Strike"] =           {["color"] = "#F3EB5D"}
---easyRotation.spells["RetSerPal"]["Hammer of the Righteous"] =   {["color"] = "#DEF8AD"}
---easyRotation.spells["RetSerPal"]["Templar's Verdict"] =         {["color"] = "#802FA5"}
---easyRotation.spells["RetSerPal"]["Final Verdict"] =             {["color"] = "#7F13A6"}
---easyRotation.spells["RetSerPal"]["Word of Glory"] =             {["color"] = "#FFD350"}
---easyRotation.spells["RetSerPal"]["Divine Storm"] =              {["color"] = "#DFF8AA"}
---easyRotation.spells["RetSerPal"]["Hammer of Wrath"] =           {["color"] = "#FCE193"}
---easyRotation.spells["RetSerPal"]["Avenging Wrath"] =            {["color"] = "#FFFF92"}
---easyRotation.spells["RetSerPal"]["Inquisition"] =               {["color"] = "#8031A8"}
---easyRotation.spells["RetSerPal"]["Holy Avenger"] =              {["color"] = "#3E44AA"}
---easyRotation.spells["RetSerPal"]["Execution Sentence"] =        {["color"] = "#D9604F"}
---easyRotation.spells["RetSerPal"]["Light's Hammer"] =            {["color"] = "#FFD633"}
---easyRotation.spells["RetSerPal"]["Seal of Truth"] =             {["color"] = "#FEFD02"}
---easyRotation.spells["RetSerPal"]["Seal of Righteousness"] =     {["color"] = "#1919FF"}
---easyRotation.spells["RetSerPal"]["Seal of Insight"] =           {["color"] = "#FBFA66"}
---easyRotation.spells["RetSerPal"]["Seal of Justice"] =           {["color"] = "#E6B22D"}
---easyRotation.spells["RetSerPal"]["Seraphim"] =                  {["color"] = "#2F36FF"}
 -- =Priest=
 -- Discipline
 -- Holy
