@@ -6,7 +6,8 @@ function easyRotation.rotations.feralCat.init()
   if not easyRotationVars.selfHealing then easyRotationVars.selfHealing = "None" end
   if not easyRotationVars.prowlMode then easyRotationVars.prowlMode = "DPS" end
   if not easyRotationVars.mark then easyRotationVars.mark = true end
-  if easyRotation:PlayerHasGlyph("The Treant") then easyRotationVars.catForm = 2 else easyRotationVars.catForm = 2 end
+  if not easyRotationVars.Serk then easyRotationVars.Serk = true end
+ -- if easyRotation:PlayerHasGlyph("The Treant") then easyRotationVars.catForm = 2 else easyRotationVars.catForm = 2 end
 
   return playerClass == "DRUID" and GetSpecialization() == 2
 end
@@ -49,8 +50,16 @@ function easyRotation.rotations.feralCat.Slash(cmd,val)
     easyRotationVars.prowlMode = "DPS"
     DEFAULT_CHAT_FRAME:AddMessage("easyRotation Prowl mode: DPS",0,0,1)
     return true
-  --else
-  --  return false
+  elseif (cmd == 'Serk' and not easyRotationVars.Serk) then
+    easyRotationVars.Serk = true
+    DEFAULT_CHAT_FRAME:AddMessage("easyRotation tracking Berserk",0,1,0)
+    return true
+  elseif (cmd == 'Serk' and easyRotationVars.Serk) then
+    easyRotationVars.Serk = false
+    DEFAULT_CHAT_FRAME:AddMessage("easyRotation not tracking Berserk",1,0,0)
+    return true
+  else
+    return false
   end
 end
 
@@ -59,10 +68,11 @@ function easyRotation.rotations.feralCat:CatForm()
 end
 
 function easyRotation.rotations.feralCat.DecideBuffs()
-  if not (easyRotation.rotations.feralCat:CatForm())
-    and easyRotation:PlayerTimeInCombat() > 1 then
-      easyRotation:UpdateRotationHinterIcon("Cat Form")
-  elseif easyRotationVars.mark and not (easyRotation:EveryoneHasBuff("Mark of the Wild")) and (GetTime() - easyRotation:SpellLastCast("Mark of the Wild")) > 30 then
+ -- if not (easyRotation.rotations.feralCat:CatForm())
+  --  and easyRotation:PlayerTimeInCombat() > 1 and easyRotation:SpellNotCastRecently("Cat Form") then
+  --    easyRotation:UpdateRotationHinterIcon("Cat Form")
+  --else
+if easyRotationVars.mark and not (easyRotation:EveryoneHasBuff("Mark of the Wild")) and (GetTime() - easyRotation:SpellLastCast("Mark of the Wild")) > 30 then
       easyRotation:UpdateRotationHinterIcon("Mark of the Wild")
   elseif easyRotationVars.selfHealing ~= "None" and easyRotation:UnitHealthPercent("player") < 95 and easyRotation:UnitHasBuff("player","Predatory Swiftness") and easyRotation:PlayerCanCastSpell("Healing Touch") then
     easyRotation:UpdateRotationHinterIcon("Healing Touch")
@@ -102,12 +112,19 @@ function easyRotation.rotations.feralCat.DecideSpells()
         end
       end
     end
-  else
-    if easyRotationVars.selfHealing == "Agressive" and easyRotation:UnitHealthPercent("player") < 85 and easyRotation:UnitHasBuff("player","Predatory Swiftness") and easyRotation:PlayerCanCastSpell("Healing Touch") then
+    elseif easyRotation.startOfCombat >0 and easyRotation:UnitHasBuff("player","Cat Form")and easyRotation:PlayerCanCastSpell("Prowl") and easyRotation:GetRange("target") < 6 and easyRotation:UnitHasBuff("player","Incarnation: King of the Jungle") then
+      easyRotation:UpdateRotationHinterIcon("Prowl")
+    elseif easyRotation.startOfCombat >0 and easyRotation:GetRange("target") > 8 and easyRotation:GetRange("target")< 25 and easyRotation:PlayerCanCastSpell("Wild Charge") then
+      easyRotation:UpdateRotationHinterIcon("Wild Charge")
+    elseif easyRotation:UnitHasBuff("player","Thorasus") and not easyRotation:UnitHasBuff("player","Incarnation: King of the Jungle") and easyRotation:PlayerCanCastSpell("Incarnation: King of the Jungle") or easyRotation.startOfCombat >0 and easyRotation:PlayerCanCastSpell("Incarnation: King of the Jungle") and easyRotationVars.Serk  then
+      easyRotation:UpdateRotationHinterIcon("Incarnation: King of the Jungle")
+    elseif easyRotation:UnitHasBuff("player","Thorasus") and not easyRotation:UnitHasBuff("player","Berserk") and easyRotation:PlayerCanCastSpell("Berserk") or easyRotation.startOfCombat >0 and easyRotation:PlayerCanCastSpell("Berserk") and easyRotationVars.Serk  then
+      easyRotation:UpdateRotationHinterIcon("Berserk")
+    elseif easyRotationVars.selfHealing == "Agressive" and easyRotation:UnitHealthPercent("player") < 85 and easyRotation:UnitHasBuff("player","Predatory Swiftness") and easyRotation:PlayerCanCastSpell("Healing Touch") then
       easyRotation:UpdateRotationHinterIcon("Healing Touch")
     elseif easyRotationVars.selfHealing == "Agressive" and easyRotation:UnitHealthPercent("player") < 80 and not easyRotation:UnitHasBuff("player","Rejuvenation") and easyRotation:PlayerCanCastSpell("Rejuvenation") then
       easyRotation:UpdateRotationHinterIcon("Rejuvenation")
-    elseif range < 10 and energy >= 50 and easyRotation:UnitHasBuff("player","Omen of Clarity") and easyRotation:UnitHasYourDebuffRemaining("target","Thrash") < 5 then
+    elseif range < 10 and energy >= 50 and easyRotation:UnitHasBuff("player","Clearcasting") and easyRotation:UnitHasYourDebuffRemaining("target","Thrash") < 5 then
       easyRotation:UpdateRotationHinterIcon("Thrash")
     elseif range < 10 and energy >= 35 and easyRotation:UnitHasYourDebuffRemaining("target","Rake") < 4.5 and easyRotation:PlayerCanCastSpell("Rake") then
       easyRotation:UpdateRotationHinterIcon("Rake")
@@ -146,7 +163,6 @@ function easyRotation.rotations.feralCat.DecideSpells()
       end
     end
   end
-end
 
 function easyRotation.rotations.feralCat.DecideIdleSpells()
   if easyRotationVars.selfHealing == "Moderate" and easyRotation:UnitHealthPercent("player") < 75 and easyRotation:UnitHasBuff("player","Predatory Swiftness") and easyRotation:PlayerCanCastSpell("Healing Touch") then

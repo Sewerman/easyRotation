@@ -371,15 +371,15 @@ function easyRotation:IsItemReady(itemName)
 end
 
 -- return true if player has a specifig glyp
-function easyRotation:PlayerHasGlyph(glyphName)
-  for i=1,GetNumGlyphs() do
-    local name, _, _, _, _ = GetGlyphInfo(i)
-    if(name == glyphName) then
-      return true
-    end
-  end
-  return false
-end
+--function easyRotation:PlayerHasGlyph(glyphName)
+--  for i=1,GetNumGlyphs() do
+--    local name, _, _, _, _ = GetGlyphInfo(i)
+--    if(name == glyphName) then
+--      return true
+--    end
+ -- end
+--  return false
+--end
 
 -- return true if player has specific item
 function easyRotation:PlayerHasItem(itemName)

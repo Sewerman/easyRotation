@@ -41,7 +41,7 @@ function easyRotation:Init()
   -- Set Saved variables Defaults
   if not easyRotationVars.hidden then easyRotationVars.hidden = false end
   if not easyRotationVars.locked then easyRotationVars.locked = false end
-  if not easyRotationVars.rotationHinterScale then easyRotationVars.rotationHinterScale = 1 end
+  if not easyRotationVars.rotationHinterScale then easyRotationVars.rotationHinterScale = 10 end
   if not easyRotationVars.rotationHinterPosX then easyRotationVars.rotationHinterPosX = 0 end
   if not easyRotationVars.rotationHinterPosY then easyRotationVars.rotationHinterPosY = -150 end
   if not easyRotationVars.rotationHinterPosAnchorPoint then easyRotationVars.rotationHinterPosAnchorPoint = "CENTER" end

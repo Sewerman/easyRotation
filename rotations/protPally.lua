@@ -4,7 +4,7 @@ function easyRotation.rotations.protPally.init()
   local _,playerClass = UnitClass("player")
     if not easyRotationVars.mode then easyRotationVars.mode = "Single Target" end
     if not easyRotationVars.seal then easyRotationVars.seal = true end
- --  if not easyRotationVars.wog then easyRotationVars.HolyWrath = true end
+    if not easyRotationVars.AvengersShield then easyRotationVars.AvengersShield = true end
  -- if not easyRotationVars.shield then easyRotationVars.shield = true end
 
   return playerClass == "PALADIN" and GetSpecialization() == 2
@@ -36,6 +36,14 @@ function easyRotation.rotations.protPally.Slash(cmd,val)
     easyRotationVars.HolyWrath = true
     DEFAULT_CHAT_FRAME:AddMessage("easyRotation tracking Holy Wrath",0,0,1)
     return true
+elseif (cmd == 'AS' and easyRotationVars.AvengersShield) then
+    easyRotationVars.AvengersShield = false
+    DEFAULT_CHAT_FRAME:AddMessage("easyRotation not tracking Avenger's Shield",1,0,0)
+    return true
+  elseif (cmd == 'AS' and not easyRotationVars.AvengersShield) then
+    easyRotationVars.AvengersShield = true
+    DEFAULT_CHAT_FRAME:AddMessage("easyRotation tracking Avenger's Shield",0,0,1)
+    return true
   else
     return false
   end
@@ -50,6 +58,7 @@ function easyRotation.rotations.protPally.DecideSpells()
   local base, posBuff, negBuff = UnitAttackPower("player")
   local ap = base + posBuff - negBuff
   local healthDeficit = UnitHealthMax("player") - UnitHealth("player")
+  local Impseals = easyRotation:IsPassiveSpell("Empowered Seals")
 
   -- taunt or salv
 --  if easyRotation.currentTauntTarget ~= nil then
@@ -61,7 +70,31 @@ function easyRotation.rotations.protPally.DecideSpells()
   --     or
 
   if easyRotationVars.mode == "Single Target" then
-if easyRotation:PlayerCanCastSpell("Word of Glory")
+if Impseals 
+        and not easyRotation:UnitHasBuff("player","Liadrin's Righteousness")
+        and easyRotation:UnitHealthPercent("player") > 50
+        and (easyRotation:GetShapeshiftForm()>1
+        or easyRotation:GetShapeshiftForm()<1)
+        and easyRotation:PlayerInCombat()
+        or easyRotation:UnitHasBuffRemaining("player", "Liadrin's Righteousness") < 10
+        and (easyRotation:GetShapeshiftForm()>1
+        or easyRotation:GetShapeshiftForm()<1)
+        and easyRotation:PlayerInCombat()
+      then easyRotation:UpdateRotationHinterIcon("Seal of Righteousness") 
+   
+   elseif Impseals
+        and easyRotation:UnitHasBuff("player","Liadrin's Righteousness")
+        and easyRotation:UnitHealthPercent("player") < 50
+        and (easyRotation:GetShapeshiftForm()>2
+        or easyRotation:GetShapeshiftForm()<2)
+        and easyRotation:PlayerInCombat()
+        or easyRotation:UnitHasBuffRemaining("player", "Liadrin's Righteousness") < 10
+        and (easyRotation:GetShapeshiftForm()>1
+        or easyRotation:GetShapeshiftForm()<1)
+        and easyRotation:PlayerInCombat()
+      then easyRotation:UpdateRotationHinterIcon("Seal of Insight") 
+
+   elseif easyRotation:PlayerCanCastSpell("Word of Glory")
         and UnitPower("player",SPELL_POWER_HOLY_POWER) >= 4
         and easyRotation:UnitHealthPercent("player") < 50
         and easyRotation:UnitHasBuff("player","Bastion of Glory")
@@ -79,12 +112,13 @@ if easyRotation:PlayerCanCastSpell("Word of Glory")
        then
       easyRotation:UpdateRotationHinterIcon("Sacred Shield")
   
-   elseif easyRotation:PlayerCanCastSpell("Avenger's Shield")
+   elseif easyRotationVars.AvengersShield 
+        and easyRotation:PlayerCanCastSpell("Avenger's Shield")
         and easyRotation:GetRange("target") < 29 
        then
       easyRotation:UpdateRotationHinterIcon("Avenger's Shield") 
   
-  elseif easyRotation:PlayerCanCastSpell("Shield of the Righteous") 
+   elseif easyRotation:PlayerCanCastSpell("Shield of the Righteous") 
         and UnitPower("player",SPELL_POWER_HOLY_POWER) >= 5
         and easyRotation:UnitHealthPercent("player") > 35
         and easyRotation:GetRange("target") < 6 
@@ -111,7 +145,7 @@ if easyRotation:PlayerCanCastSpell("Word of Glory")
       easyRotation:UpdateRotationHinterIcon("Light's Hammer")
 
    elseif easyRotation:PlayerCanCastSpell("Holy Prism")
-       and easyRotation:GetRange("target") < 15
+       and easyRotation:GetRange("target") < 40
       then
       easyRotation:UpdateRotationHinterIcon("Holy Prism")
 
@@ -142,7 +176,7 @@ if easyRotation:PlayerCanCastSpell("Word of Glory")
     -- HV & AW should be used always on cd, hence the macros
 
     -- self preservation <20% or is tracking wog <50%
-  if easyRotation:PlayerCanCastSpell("Word of Glory")
+ if easyRotation:PlayerCanCastSpell("Word of Glory")
         and UnitPower("player",SPELL_POWER_HOLY_POWER) >= 4
         and easyRotation:UnitHealthPercent("player") < 35
           and easyRotation:UnitHasBuff("player","Bastion of Glory")
@@ -155,9 +189,11 @@ if easyRotation:PlayerCanCastSpell("Word of Glory")
       then
       easyRotation:UpdateRotationHinterIcon("Word of Glory") 
 
-   elseif easyRotation:PlayerCanCastSpell("Avenger's Shield")
+   elseif easyRotationVars.AvengersShield  
+        and easyRotation:PlayerCanCastSpell("Avenger's Shield")
         and easyRotation:GetRange("target") < 29
-         or easyRotation:UnitHasBuff("player","Grand Crusader")
+         or easyRotationVars.AvengersShield 
+         and easyRotation:UnitHasBuff("player","Grand Crusader")
          and easyRotation:GetRange("target") < 29
          and UnitPower("player",SPELL_POWER_HOLY_POWER) <5
        then
@@ -188,7 +224,7 @@ if easyRotation:PlayerCanCastSpell("Word of Glory")
    elseif easyRotation:PlayerCanCastSpell("Holy Wrath")
         and easyRotationVars.HolyWrath
         and easyRotation:GetRange("target") < 10 
-        and easyRotation:UnitManaPercent("player") > 35 
+        --and easyRotation:UnitManaPercent("player") > 35 
        then
       easyRotation:UpdateRotationHinterIcon("Holy Wrath")
  
@@ -204,7 +240,7 @@ if easyRotation:PlayerCanCastSpell("Word of Glory")
       easyRotation:UpdateRotationHinterIcon("Judgment") 
 
    elseif easyRotation:PlayerCanCastSpell("Holy Prism")
-        and easyRotation:GetRange("target") < 15        
+        and easyRotation:GetRange("target") < 40        
       then
       easyRotation:UpdateRotationHinterIcon("Holy Prism")
 

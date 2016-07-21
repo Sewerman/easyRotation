@@ -249,7 +249,7 @@ easyRotation.spells["protPally"]["Seal of Righteousness"] =    {["color"] = "#19
 easyRotation.spells["retadin"]["Judgment"] =                  {["color"] = "#E6B23D"}
 easyRotation.spells["retadin"]["Flash of Light"] =            {["color"] = "#FF9D00"}
 easyRotation.spells["retadin"]["Crusader Strike"] =           {["color"] = "#F3EB5D"}
-easyRotation.spells["retadin"]["Justicar's Vengence"] =       {["color"] = "#FA6407"}
+easyRotation.spells["retadin"]["Justicar's Vengeance"] =      {["color"] = "#FA6407"}
 easyRotation.spells["retadin"]["Templar's Verdict"] =         {["color"] = "#802FA5"}
 easyRotation.spells["retadin"]["Divine Storm"] =              {["color"] = "#DFF8AA"}
 easyRotation.spells["retadin"]["Blade of Wrath"] =            {["color"] = "#99DCFE"}
