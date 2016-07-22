@@ -252,7 +252,7 @@ easyRotation.spells["retadin"]["Crusader Strike"] =           {["color"] = "#F3E
 easyRotation.spells["retadin"]["Justicar's Vengeance"] =      {["color"] = "#FA6407"}
 easyRotation.spells["retadin"]["Templar's Verdict"] =         {["color"] = "#802FA5"}
 easyRotation.spells["retadin"]["Divine Storm"] =              {["color"] = "#DFF8AA"}
-easyRotation.spells["retadin"]["Blade of Wrath"] =            {["color"] = "#99DCFE"}
+easyRotation.spells["retadin"]["Blade of Wrath"] =            {["color"] = "#96D8FA"}
 easyRotation.spells["retadin"]["Avenging Wrath"] =            {["color"] = "#FFFF92"}
 easyRotation.spells["retadin"]["Execution Sentence"] =        {["color"] = "#D9604F"}
 
