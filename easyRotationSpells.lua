@@ -25,8 +25,7 @@ easyRotation.spells = {
   ["affliLock"] = {},
   ["demoLock"] = {},
   ["destroLock"] = {},
-  ["drainLock"] = {},
-  ["RetSerPal"] = {}
+  ["drainLock"] = {}
 }
 
 -- =Death knight=
@@ -104,17 +103,14 @@ easyRotation.spells["unholyDK"]["Death Pact"] =          {["color"] = "#F01101"}
 
 -- =Druid=
 -- Balance
-easyRotation.spells["boomkin"]["Wrath"] =               {["color"] = "#1EAB88"}
+easyRotation.spells["boomkin"]["Solar Wrath"] =          {["color"] = "#1EAB88"}
 easyRotation.spells["boomkin"]["Starsurge"] =           {["color"] = "#C900A1"}
 easyRotation.spells["boomkin"]["Sunfire"] =             {["color"] = "#FF8B16"}
-easyRotation.spells["boomkin"]["Celestial Alignment"] = {["color"] = "#549DD0"}
+easyRotation.spells["boomkin"]["Incarnation:Chosen of Elune"] = {["color"] = "#549DD0"}
 easyRotation.spells["boomkin"]["Moonkin Form"] =        {["color"] = "#04FED2"}
 easyRotation.spells["boomkin"]["Moonfire"] =            {["color"] = "#3C1C77"}
-easyRotation.spells["boomkin"]["Starfire"] =            {["color"] = "#0961A4"}
-easyRotation.spells["boomkin"]["Faerie Fire"] =         {["color"] = "#C802A1"}
+easyRotation.spells["boomkin"]["Lunar Strike"] =        {["color"] = "#0961A4"}
 easyRotation.spells["boomkin"]["Starfall"] =            {["color"] = "#585858"}                      
-easyRotation.spells["boomkin"]["Mark of the Wild"] =    {["color"] = "#F73BBB"}
-easyRotation.spells["boomkin"]["Nature's Vigil"] =      {["color"] = "#007A00"}
 easyRotation.spells["boomkin"]["Stellar Flare"] =       {["color"] = "#BBDAFA"}
 easyRotation.spells["boomkin"]["StopCast"] =            {["color"] = "#ED0713"}
 -- Feral
@@ -226,24 +222,15 @@ easyRotation.spells["frostMage"]["Ice Floes"] =          {["color"] = "#00005C"}
 -- Holy
 -- Protection
 -- Retadin
--- Seraphim
-easyRotation.spells["protPally"]["Righteous Fury"] =           {["color"] = "#FA8400"}
 easyRotation.spells["protPally"]["Shield of the Righteous"] =  {["color"] = "#7F31A8"}
-easyRotation.spells["protPally"]["Word of Glory"] =            {["color"] = "#FFD250"}
-easyRotation.spells["protPally"]["Crusader Strike"] =          {["color"] = "#F2EB5D"}
 easyRotation.spells["protPally"]["Judgment"] =                 {["color"] = "#E5B23D"}
-easyRotation.spells["protPally"]["Hammer of Wrath"] =          {["color"] = "#FBE193"}
 easyRotation.spells["protPally"]["Avenger's Shield"] =         {["color"] = "#FAE426"}
 easyRotation.spells["protPally"]["Consecration"] =             {["color"] = "#FFA10F"}
-easyRotation.spells["protPally"]["Holy Wrath"] =               {["color"] = "#FAF871"}
 easyRotation.spells["protPally"]["Hammer of the Righteous"] =  {["color"] = "#DEF8AD"}
-easyRotation.spells["protPally"]["Sacred Shield"] =            {["color"] = "#FAEC86"}
-easyRotation.spells["protPally"]["Execution Sentence"] =       {["color"] = "#D9604F"}
-easyRotation.spells["protPally"]["Light's Hammer"] =           {["color"] = "#FFFF75"} 
-easyRotation.spells["protPally"]["Holy Prism"] =               {["color"] = "#CFA600"}   
-easyRotation.spells["protPally"]["Seal of Truth"] =            {["color"] = "#FEFD02"}
-easyRotation.spells["protPally"]["Seal of Insight"] =          {["color"] = "#FBFA65"}
-easyRotation.spells["protPally"]["Seal of Righteousness"] =    {["color"] = "#1919FF"}
+easyRotation.spells["protPally"]["Blessed Hammer"] =            {["color"] = "#E8A0FA"}
+easyRotation.spells["protPally"]["Avenging Wrath"] =            {["color"] = "#FFFF92"}
+easyRotation.spells["protPally"]["Light of the Protector"]     =  {["color"] = "#FAAC46"}
+easyRotation.spells["protPally"]["Bastion of Light"] =           {["color"] = "#E08916"}
 
 -- Retribution
 easyRotation.spells["retadin"]["Judgment"] =                  {["color"] = "#E6B23D"}
@@ -255,6 +242,7 @@ easyRotation.spells["retadin"]["Divine Storm"] =              {["color"] = "#DFF
 easyRotation.spells["retadin"]["Blade of Wrath"] =            {["color"] = "#96D8FA"}
 easyRotation.spells["retadin"]["Avenging Wrath"] =            {["color"] = "#FFFF92"}
 easyRotation.spells["retadin"]["Execution Sentence"] =        {["color"] = "#D9604F"}
+easyRotation.spells["retadin"]["Consecration"] =              {["color"] = "#FFA10F"}
 
 -- =Priest=
 -- Discipline
