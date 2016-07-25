@@ -310,7 +310,7 @@ end
 SPELL_POWER_BLOOD_RUNE =  -1
 SPELL_POWER_UNHOLY_RUNE = -2
 SPELL_POWER_FROST_RUNE =  -3
-SPELL_POWER_DEATH_RUNE =  -4
+SPELL_POWER_DEATH_RUNE =  -4 
     function easyRotation:GetPlayerResource(resource_type)
   if(resource_type > 0) then
     return UnitPower("player", resource_type, true)
@@ -318,7 +318,7 @@ SPELL_POWER_DEATH_RUNE =  -4
     local count = 0
     for i=1,6 do
       if (GetRuneType(i) * -1) == resource_type or (GetRuneType(i) * -1) == SPELL_POWER_DEATH_RUNE then
-        count = count + GetRuneCount(i)
+        count = count + GetRuneCount(i)   
       end
     end
     return count
