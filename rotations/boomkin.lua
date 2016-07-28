@@ -74,29 +74,22 @@ end
 
   
 function easyRotation.rotations.boomkin.DecideSpells()
+local dumpStacks = false
 
-  local Burnphase = easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment")==3 
-       
-  local Burn = 0   
-   function onUse() 
-   repeat
-   doeasyRotation:UpdateRotationHinterIcon("Lunar Strike") 
-   Burn = Burn + 1
-   until Burn == 3
-   return 1
-  end
- 
+-- begin if logic
+if not dumpStacks and easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment") > 2 then
+ dumpStacks = true
+elseif dumpStacks and easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment") < 1 then
+ dumpStacks = false
+elseif dumpStacks then
+   easyRotation:UpdateRotationHinterIcon("Lunar Strike") 
 
-      
-
-if easyRotation:PlayerCanCastSpell("Lunar Strike")
+elseif easyRotation:PlayerCanCastSpell("Lunar Strike")
    and not easyRotationVars.LunarStrike
    and easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment") > 0
-   --and not Burnphase
-    or Burnphase
   then easyRotation:UpdateRotationHinterIcon("Lunar Strike")      
    
-elseif easyRotation:PlayerCanCastSpell("Sunfire")
+elseif easyRotation:PlayerCanCastSpell("Moonfire")
    and not easyRotation:UnitHasDebuff("target","Moonfire")
     or easyRotation:UnitHasDebuffRemaining("target", "Moonfire") < 4
   then easyRotation:UpdateRotationHinterIcon("Moonfire")
@@ -114,11 +107,11 @@ elseif easyRotation:PlayerCanCastSpell("Stellar Flare")
   then easyRotation:UpdateRotationHinterIcon("Stellar Flare")
 
 elseif easyRotation:PlayerCanCastSpell("Starsurge")
-   and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)> 400
+   and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)> 550
   then easyRotation:UpdateRotationHinterIcon("Starsurge")
 
 elseif easyRotation:PlayerCanCastSpell("Solar Wrath")
-   and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)< 400
+   and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)< 550
   then easyRotation:UpdateRotationHinterIcon("Solar Wrath")
 
 
