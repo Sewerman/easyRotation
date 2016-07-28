@@ -5,7 +5,7 @@ function easyRotation.rotations.protPally.init()
     if not easyRotationVars.mode then easyRotationVars.mode = "Single Target" end
     if not easyRotationVars.seal then easyRotationVars.seal = true end
     if not easyRotationVars.AvengersShield then easyRotationVars.AvengersShield = true end
- -- if not easyRotationVars.shield then easyRotationVars.shield = true end
+
 
   return playerClass == "PALADIN" and GetSpecialization() == 2
 end
@@ -67,6 +67,7 @@ elseif easyRotation:PlayerCanCastSpell("Consecration")
   then easyRotation:UpdateRotationHinterIcon("Consecration")
 
 elseif easyRotation:PlayerCanCastSpell("Avenger's Shield")
+   and not easyRotationVars.AvengersShield
   then easyRotation:UpdateRotationHinterIcon("Avenger's Shield")
 
 
