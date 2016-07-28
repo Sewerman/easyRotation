@@ -186,13 +186,14 @@ easyRotation.spells["fireMage"]["Scorch"] =              {["color"] = "#E63402"}
 easyRotation.spells["fireMage"]["Fireball"] =            {["color"] = "#FA3C01"}
 easyRotation.spells["fireMage"]["Pyroblast"] =           {["color"] = "#F53502"}
 easyRotation.spells["fireMage"]["Inferno Blast"] =       {["color"] = "#D73808"}
-easyRotation.spells["fireMage"]["Frostfire Bolt"] =      {["color"] = "#367CD3"}
+easyRotation.spells["fireMage"]["Flame On"] =            {["color"] = "#367CD3"}
 easyRotation.spells["fireMage"]["Blast Wave"] =          {["color"] = "#FF9901"}
 easyRotation.spells["fireMage"]["Dragon's Breath"] =     {["color"] = "#DC3702"}                      
---easyRotation.spells["fireMage"]["Stop Casting"] =        {["color"] = "#ED05FA"}
+easyRotation.spells["fireMage"]["Flame Strike"] =        {["color"] = "#FA4205"}
 easyRotation.spells["fireMage"]["Arcane Brilliance"] =   {["color"] = "#32D2F6"}
 easyRotation.spells["fireMage"]["Rune of Power"] =       {["color"] = "#85C3FF"}
 easyRotation.spells["fireMage"]["Meteor"] =              {["color"] = "#E62E01"}
+easyRotation.spells["fireMage"]["Fire Blast"] =          {["color"] = "#D73808"}
 
 
 -- Frost
