@@ -58,15 +58,15 @@ if easyRotation:UnitHasBuff("player","Thorasus")
      and easyRotation:PlayerCanCastSpell("Avenging Wrath")
      and easyRotation:PlayerTimeInCombat()>1
      and easyRotation:GetRange("target")< 6  
-     or easyRotationVars.wings 
-     and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 1 
-     and not easyRotation:UnitHasBuff("player","Avenging Wrath")  
-     or  easyRotation:UnitHealthPercent("Target")< 35 
-     and easyRotation:PlayerCanCastSpell("Avenging Wrath")
-     and not easyRotation:UnitHasBuff("player","Avenging Wrath")
+     --or easyRotationVars.wings 
+     --and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 1 
+     --and not easyRotation:UnitHasBuff("player","Avenging Wrath")  
+     --or  easyRotation:UnitHealthPercent("Target")< 35 
+     --and easyRotation:PlayerCanCastSpell("Avenging Wrath")
+     --and not easyRotation:UnitHasBuff("player","Avenging Wrath")
      or  easyRotationVars.wings      
      and not easyRotation:UnitHasBuff("player","Avenging Wrath") 
-     and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 0   
+     and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 1   
        then easyRotation:UpdateRotationHinterIcon("Avenging Wrath")
 
   elseif easyRotation:PlayerCanCastSpell("Justicar's Vengeance")
@@ -136,15 +136,15 @@ if easyRotation:UnitHasBuff("player","Thorasus")
      and easyRotation:PlayerCanCastSpell("Avenging Wrath")
      and easyRotation:PlayerTimeInCombat()>1
      and easyRotation:GetRange("target")< 6  
-     or easyRotationVars.wings 
-     and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 1 
-     and not easyRotation:UnitHasBuff("player","Avenging Wrath")  
-     or  easyRotation:UnitHealthPercent("Target")< 35 
-     and easyRotation:PlayerCanCastSpell("Avenging Wrath")
-     and not easyRotation:UnitHasBuff("player","Avenging Wrath")
+     --or easyRotationVars.wings 
+     --and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 1 
+     --and not easyRotation:UnitHasBuff("player","Avenging Wrath")  
+     --or  easyRotation:UnitHealthPercent("Target")< 35 
+     --and easyRotation:PlayerCanCastSpell("Avenging Wrath")
+     --and not easyRotation:UnitHasBuff("player","Avenging Wrath")
      or  easyRotationVars.wings      
      and not easyRotation:UnitHasBuff("player","Avenging Wrath") 
-     and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 0   
+     and easyRotation:GetPlayerSpellCharges("Avenging Wrath")> 1  
        then easyRotation:UpdateRotationHinterIcon("Avenging Wrath")
 
   elseif easyRotation:PlayerCanCastSpell("Consecration")
