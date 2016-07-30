@@ -103,6 +103,7 @@ easyRotation.spells["unholyDK"]["Death Pact"] =          {["color"] = "#F01101"}
 
 -- =Druid=
 -- Balance
+easyRotation.spells["boomkin"]["Celestial Alignment"] = {["color"] = "#A2E3FC"}
 easyRotation.spells["boomkin"]["Solar Wrath"] =          {["color"] = "#1EAB88"}
 easyRotation.spells["boomkin"]["Starsurge"] =           {["color"] = "#C900A1"}
 easyRotation.spells["boomkin"]["Sunfire"] =             {["color"] = "#FF8B16"}
