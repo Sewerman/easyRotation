@@ -325,23 +325,11 @@ SPELL_POWER_DEATH_RUNE =  -4
   end
 end
 
--- Stances will be needed for warriors and Druids. paladins can swap seals
---STANCE_POSITION =  1
---STANCE_POSITION =  2
---STANCE_POSITION =  3
---STANCE_POSITION =  4
+
 function easyRotation:GetShapeshiftForm(stance_position)
- --if(stance_position) > 0 then
+ 
     return GetShapeshiftForm(stance_position)
-  --else
-  --local stance = 1
-  --  for i=0,4 do
-  --    if (GetShapeshiftForm(i) * 1) == stance_position then
- --       stance = stance(i)
- --     end
-  --  end
- --   return stance
- --end
+ 
 end
 
 
