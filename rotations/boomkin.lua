@@ -61,62 +61,124 @@ if not (easyRotation:UnitHasBuff("player","Dash") and easyRotation:UnitHasBuff("
   end
 end
 
---function easyRotation:BurnphaseBoomkin()
---if easyRotationVars.LunarStrike == false then
---    return nil
---   else   
- --   local _start = easyRotationVars.LunarStrike and easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment") ==3
---    local _end = easyRotationVars.LunarStrike and easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment") ==0
---     for i=3,1 do
---      easyRotation:UpdateRotationHinterIcon("Lunar Strike")
---  end 
--- end
-
   
 function easyRotation.rotations.boomkin.DecideSpells()
-local dumpStacks = false
+  if easyRotationVars.mode == "Single Target" then
+    easyRotation.rotations.boomkin.DecideSingleTargetSpells()
+  elseif easyRotationVars.mode == "AOE" then
+    easyRotation.rotations.boomkin.DecideAOESpells()
+  end
+end
 
--- begin if logic
-if not dumpStacks and easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment") > 2 then
- dumpStacks = true
-elseif dumpStacks and easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment") < 1 then
- dumpStacks = false
-elseif dumpStacks then
-   easyRotation:UpdateRotationHinterIcon("Lunar Strike") 
+function easyRotation.rotations.boomkin.DecideSingleTargetSpells()
 
-elseif easyRotation:PlayerCanCastSpell("Lunar Strike")
+if not easyRotation:IsMoving() 
+   and easyRotation:PlayerCanCastSpell("Lunar Strike")
    and not easyRotationVars.LunarStrike
    and easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment") > 0
-  then easyRotation:UpdateRotationHinterIcon("Lunar Strike")      
+  or easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment")>2
+  or easyRotationVars.LunarStrike
+     and not easyRotation:SpellNotCastRecently("Lunar Strike") 
+     and easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment")>0 
+  then easyRotation:UpdateRotationHinterIcon("Lunar Strike") 
+
+elseif easyRotationVars.trackCelestial 
+   and easyRotation:UnitHasYourDebuff("target","Moonfire")
+   and easyRotation:UnitHasYourDebuff("target","Sunfire")
+   and easyRotation:UnitHasYourDebuff("target","Stellar Flare")
+   and easyRotation:PlayerCanCastSpell("Celestial Alignment")
+  then easyRotation:UpdateRotationHinterIcon("Celestial Alignment")
    
 elseif easyRotation:PlayerCanCastSpell("Moonfire")
-   and not easyRotation:UnitHasDebuff("target","Moonfire")
-    or easyRotation:UnitHasDebuffRemaining("target", "Moonfire") < 4
+   and (easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment")>0 
+            and not easyRotation:SpellNotCastRecently("Lunar Strike"))
+   and not easyRotation:UnitHasYourDebuff("target","Moonfire")
+    or easyRotation:UnitHasYourDebuffRemaining("target", "Moonfire") < 4
+    or easyRotation:IsMoving() 
   then easyRotation:UpdateRotationHinterIcon("Moonfire")
 
 elseif easyRotation:PlayerCanCastSpell("Sunfire")
-   and not easyRotation:UnitHasDebuff("target","Sunfire")
-    or easyRotation:UnitHasDebuffRemaining("target", "Sunfire") < 4
+   and (easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment")>0 
+          and not easyRotation:SpellNotCastRecently("Lunar Strike"))
+   and not easyRotation:UnitHasYourDebuff("target","Sunfire")
+    or easyRotation:UnitHasYourDebuffRemaining("target", "Sunfire") < 4
   then easyRotation:UpdateRotationHinterIcon("Sunfire")
 
-elseif easyRotation:PlayerCanCastSpell("Stellar Flare")
+elseif not easyRotation:IsMoving() 
+   and easyRotation:PlayerCanCastSpell("Stellar Flare")
    and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)> 150
-   and not easyRotation:UnitHasDebuff("target","Stellar Flare")
-    or easyRotation:UnitHasDebuffRemaining("target", "Stellar Flare") < 4
+   and not easyRotation:UnitHasYourDebuff("target","Stellar Flare")
+   and easyRotation:SpellNotCastRecently("Stellar Flare")
+    or easyRotation:UnitHasYourDebuffRemaining("target", "Stellar Flare") < 4
+    and easyRotation:SpellNotCastRecently("Stellar Flare")
+    and (easyRotation:UnitHasBuffStacks("player", "Lunar Empowerment")>0
+          and not easyRotation:SpellNotCastRecently("Lunar Strike"))
+    and not easyRotation:IsMoving()  
     and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)> 150
   then easyRotation:UpdateRotationHinterIcon("Stellar Flare")
 
 elseif easyRotation:PlayerCanCastSpell("Starsurge")
-   and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)> 550
+   and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)> 500
+  or easyRotation:IsMoving() 
+   and easyRotation:PlayerCanCastSpell("Starsurge")
+   and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)> 500
   then easyRotation:UpdateRotationHinterIcon("Starsurge")
 
-elseif easyRotation:PlayerCanCastSpell("Solar Wrath")
-   and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)< 550
+elseif not easyRotation:IsMoving() 
+   and easyRotation:PlayerCanCastSpell("Solar Wrath")
+   and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)< 500
   then easyRotation:UpdateRotationHinterIcon("Solar Wrath")
 
-
-
-
-  
+ end
 end
-end
+
+
+ function easyRotation.rotations.boomkin.DecideAOESpells()
+
+if easyRotationVars.trackCelestial 
+   and easyRotation:UnitHasYourDebuff("target","Moonfire")
+   and easyRotation:UnitHasYourDebuff("target","Sunfire")
+   and easyRotation:UnitHasYourDebuff("target","Stellar Flare")
+   and easyRotation:PlayerCanCastSpell("Celestial Alignment")
+  then easyRotation:UpdateRotationHinterIcon("Celestial Alignment")
+   
+elseif easyRotation:PlayerCanCastSpell("Moonfire")
+   and not easyRotation:UnitHasYourDebuff("target","Moonfire")
+    or easyRotation:UnitHasYourDebuffRemaining("target", "Moonfire") < 4
+    or easyRotation:IsMoving() 
+  then easyRotation:UpdateRotationHinterIcon("Moonfire")
+
+elseif easyRotation:PlayerCanCastSpell("Sunfire")
+    and not easyRotation:UnitHasYourDebuff("target","Sunfire")
+    or easyRotation:UnitHasYourDebuffRemaining("target", "Sunfire") < 4
+  then easyRotation:UpdateRotationHinterIcon("Sunfire")
+
+elseif not easyRotation:IsMoving() 
+   and easyRotation:PlayerCanCastSpell("Stellar Flare")
+   and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)> 150
+   and not easyRotation:UnitHasYourDebuff("target","Stellar Flare")
+   and easyRotation:SpellNotCastRecently("Stellar Flare")
+    or easyRotation:UnitHasYourDebuffRemaining("target", "Stellar Flare") < 4
+    and easyRotation:SpellNotCastRecently("Stellar Flare")
+    and not easyRotation:IsMoving()  
+    and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)> 150
+  then easyRotation:UpdateRotationHinterIcon("Stellar Flare")
+
+elseif easyRotation:IsMouseOverTarget()
+       and easyRotation:GetRange("target")<=45 
+   and easyRotation:PlayerCanCastSpell("Starfall")
+   and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)> 600
+  or easyRotation:IsMoving()
+   and easyRotation:IsMouseOverTarget()
+   and easyRotation:GetRange("target")<=45 
+   and easyRotation:PlayerCanCastSpell("Starfall")
+   and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)> 600
+  then easyRotation:UpdateRotationHinterIcon("Starfall")
+
+elseif not easyRotation:IsMoving() 
+   and easyRotation:PlayerCanCastSpell("Lunar Strike")
+   and easyRotation:GetPlayerResource(SPELL_POWER_LUNAR_POWER)< 600
+  then easyRotation:UpdateRotationHinterIcon("Lunar Strike")
+
+  end
+ end
