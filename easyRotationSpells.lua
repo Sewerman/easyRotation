@@ -224,16 +224,17 @@ easyRotation.spells["frostMage"]["Ice Floes"] =          {["color"] = "#00005C"}
 -- Holy
 -- Protection
 -- Retadin
-easyRotation.spells["protPally"]["Shield of the Righteous"] =  {["color"] = "#7F31A8"}
-easyRotation.spells["protPally"]["Judgment"] =                 {["color"] = "#E5B23D"}
-easyRotation.spells["protPally"]["Avenger's Shield"] =         {["color"] = "#FAE426"}
-easyRotation.spells["protPally"]["Consecration"] =             {["color"] = "#FFA10F"}
-easyRotation.spells["protPally"]["Hammer of the Righteous"] =  {["color"] = "#DEF8AD"}
-easyRotation.spells["protPally"]["Blessed Hammer"] =            {["color"] = "#E8A0FA"}
-easyRotation.spells["protPally"]["Avenging Wrath"] =            {["color"] = "#FFFF92"}
-easyRotation.spells["protPally"]["Light of the Protector"]     =  {["color"] = "#FAAC46"}
-easyRotation.spells["protPally"]["Bastion of Light"] =           {["color"] = "#E08916"}
-
+easyRotation.spells["protPally"]["Shield of the Righteous"] = {["color"] = "#7F31A8"}
+easyRotation.spells["protPally"]["Judgment"] =                {["color"] = "#E5B23D"}
+easyRotation.spells["protPally"]["Avenger's Shield"] =        {["color"] = "#FAE426"}
+easyRotation.spells["protPally"]["Consecration"] =            {["color"] = "#FFA10F"}
+easyRotation.spells["protPally"]["Hammer of the Righteous"] = {["color"] = "#DEF8AD"}
+easyRotation.spells["protPally"]["Blessed Hammer"] =          {["color"] = "#E8A0FA"}
+easyRotation.spells["protPally"]["Avenging Wrath"] =          {["color"] = "#FADA8E"}
+easyRotation.spells["protPally"]["Light of the Protector"] =  {["color"] = "#FAAC46"}
+easyRotation.spells["protPally"]["Bastion of Light"] =        {["color"] = "#E08916"}
+easyRotation.spells["protPally"]["Divine Steed"] =            {["color"] = "#3895FF"}
+easyRotation.spells["protPally"]["Blinding Light"] =          {["color"] = "#FCEC05"}
 -- Retribution
 easyRotation.spells["retadin"]["Judgment"] =                  {["color"] = "#E6B23D"}
 easyRotation.spells["retadin"]["Flash of Light"] =            {["color"] = "#FF9D00"}
